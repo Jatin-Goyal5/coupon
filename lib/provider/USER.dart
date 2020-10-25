@@ -55,7 +55,7 @@ Future<void> addCoupon(CouponDetail couponDetail){
 
 Future<void> removeCoupon(String id ) async{
   final prodid = couponList.indexWhere((element) => element.id == id);
-  if(prodid >= 0){
+  
     final  url = 'https://flutter-location-47366.firebaseio.com/user/$id.json';
     var coupon = couponList[prodid];
     couponList.removeAt(prodid);
@@ -63,12 +63,11 @@ Future<void> removeCoupon(String id ) async{
 
     http.delete(url).then((_){
       coupon = null;
-    }).catchError((){
+    }).catchError((e){
+      print(e);
       couponList.insert(prodid, coupon);
     }      
     );
-   
-  }
-  notifyListeners();
+   notifyListeners();
 }
 }
